@@ -45,6 +45,10 @@ RUN apt update -y \
     && ln -sf /usr/bin/pip3 /usr/bin/pip \
     && rm -rf /var/lib/apt/lists/*
 
+RUN sudo curl -LO https://dl.k8s.io/release/v1.25.0/bin/linux/amd64/kubectl
+RUN chmod +x kubectl
+RUN mv kubectl /usr/bin/
+
 # arch command on OS X reports "i386" for Intel CPUs regardless of bitness
 RUN export ARCH=$(echo ${TARGETPLATFORM} | cut -d / -f2) \
     && if [ "$ARCH" = "arm64" ]; then export ARCH=aarch64 ; fi \
